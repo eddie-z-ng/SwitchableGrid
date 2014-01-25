@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="switchGrid">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!--<div ng-controller="Cntl2" class="expressions">
+    Expression:
+    <input type='text' ng-model="expr" size="80"/>  {{3*10|currency}}
+    1+2={{1+2}}
+    <button ng-click="addExp(expr)">Evaluate</button>
+    <ul>
+        <li ng-repeat="expr in exprs">
+            [ <a href="" ng-click="removeExp($index)">X</a> ]
+            {{expr}} => <span ng-bind="$eval(expr)">nada</span>
+        </li>
+    </ul>
+</div>-->
+
+<div ng-controller="SwitchableGridController">
+
+    <div class="bar">
+
+        <!-- These two buttons switch the layout varaible,
+             which causes the correct UL to be shown. -->
+
+        <a class="list-icon" ng-class="{active: layout == 'list'}" ng-click="layout = 'list'"></a>
+        <a class="grid-icon" ng-class="{active: layout == 'grid'}" ng-click="layout = 'grid'"></a>
+    </div>
+
+    <button type="button" ng-click="getNew()">Refresh</button>
+
+    <!-- We have two layouts. We choose which one to show depending on the "layout" binding -->
+
+    <ul ng-show="layout == 'grid'" class="grid">
+        <!-- A view with big photos and no text -->
+        <li ng-repeat="p in pics">
+            <a href="{{p.link}}" target="_blank"><img ng-src="{{p.images.standard_resolution.url}}" /></a>
+        </li>
+    </ul>
+
+    <ul ng-show="layout == 'list'" class="list">
+        <!-- A compact view smaller photos and titles -->
+        <li ng-repeat="p in pics">
+            <a href="{{p.link}}" target="_blank"><img ng-src="{{p.images.thumbnail.url}}" /></a>
+            <p>{{p.user.full_name}} : {{p.caption.text}}</p>
+            <p ng-repeat="tag in p.tags"> #{{tag}} </p>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
